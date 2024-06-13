@@ -8,7 +8,7 @@ IDE: VS-Code
 
 Note: Bot is deployed on contact page
 ### Devloped by :
-   Biswaranjan Padhi
+   Biswaranjan Padhi,
    intern
        
 
