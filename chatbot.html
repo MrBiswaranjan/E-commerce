@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chatbot</title>
+  <style>
+    /* CSS styles */
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="chat-container">
+      <div class="chat-box" id="chat-box"></div>
+      <input type="text" id="user-input" placeholder="Type your message...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    const subscriptionKey = 'your-azure-subscription-key';
+    const endpoint = 'https://your-region.api.cognitive.microsoft.com/luis/prediction/v3.0/apps/your-app-id/slots/production/predict?subscription-key=' + subscriptionKey + '&verbose=true&show-all-intents=true&log=true&query=';
+
+    function sendMessage() {
+      var userInput = document.getElementById("user-input").value;
+      if (userInput.trim() === "") return;
+
+      var chatBox = document.getElementById("chat-box");
+      var userMessage = document.createElement("p");
+      userMessage.textContent = "You: " + userInput;
+      chatBox.appendChild(userMessage);
+
+      // Send user message to LUIS endpoint
+      $.ajax({
+        url: endpoint + encodeURIComponent(userInput),
+        type: 'GET',
+        success: function (data) {
+          var botMessage = document.createElement("p");
+          botMessage.textContent = "Bot: " + data.prediction.topIntent;
+          chatBox.appendChild(botMessage);
+          chatBox.scrollTop = chatBox.scrollHeight;
+        },
+        error: function () {
+          console.log('Error calling LUIS endpoint');
+        }
+      });
+
+      document.getElementById("user-input").value = "";
+    }
+  </script>
+</body>
+
+</html>
+//Replace 'your-azure-subscription-key', 'your-region', and 'your-app-id' with your Azure subscription key, Azure region, and LUIS app ID, respectively.
+
+This example uses jQuery for making AJAX requests to the LUIS endpoint. When the user sends a message, it's sent to the LUIS endpoint for intent recognition. The response from LUIS is then displayed as the bot's message in the chat box.
+
+Make sure you have created and trained your LUIS app in the Azure portal and obtained the necessary subscription key and endpoint before using this code.
