@@ -7,6 +7,10 @@ Web Technologies used: HTML, CSS, JS, Bootstrap
 IDE: VS-Code
 
 Note: Bot is deployed on contact page
+### Devloped by :
+   Biswaranjan Padhi
+   intern
+       
 
 ### Industry :
 Lifestyle
